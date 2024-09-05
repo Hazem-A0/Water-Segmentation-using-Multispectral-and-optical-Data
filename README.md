@@ -2,10 +2,11 @@
 
 # Overview 
 
-![image](https://github.com/user-attachments/assets/b6e4de6d-dd37-4f9c-8df6-7699cbdcc99c)
-
 Water Segmentation Using U-Net
 This repository contains a Jupyter notebook for segmenting water bodies from images using a U-Net model. The project is implemented using TensorFlow and Keras, and the dataset consists of multispectral images and their corresponding labels.
+
+![image](https://github.com/user-attachments/assets/b6e4de6d-dd37-4f9c-8df6-7699cbdcc99c)
+
 
 # Contents
     -Data Loading and Preprocessing: The notebook loads the images and labels, resizes them to a uniform size, and normalizes the image data.
