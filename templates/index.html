@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Segmentation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            background-image: url('{{ url_for('static', filename='image2.jpg') }}');
+            background-size: cover; /* Ensures the image covers the whole background */
+            background-position: center; /* Centers the image */
+            background-repeat: no-repeat; /* Prevents the image from repeating */
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.8); /* Adds a slight white overlay for better text visibility */
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px; /* Space between the two images */
+        }
+
+        .image-container img {
+            max-width: 300px;
+            max-height: 300px;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+        function previewFile() {
+            const preview = document.getElementById('uploaded-image-preview');
+            const file = document.querySelector('input[type=file]').files[0];
+            const reader = new FileReader();
+
+            reader.addEventListener("load", function () {
+                preview.src = reader.result;
+            }, false);
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload an Image for Water Segmentation</h1>
+        <form action="/predict" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".tif" required onchange="previewFile()">
+            <button type="submit">Predict</button>
+        </form>
+
+        <div id="result">
+            <h2> Segmented Image:</h2>
+            <div class="image-container">
+                <!-- Display the RGB composite as uploaded image preview -->
+                {% if rgb_image %}
+                    <img id="uploaded-image-preview" src="data:image/png;base64,{{ rgb_image }}" alt="Uploaded Image">
+                {% else %}
+                    <img id="uploaded-image-preview" src="" alt="Uploaded Image">
+                {% endif %}
+
+                <!-- Segmented Image -->
+                {% if output_image %}
+                    <img src="data:image/png;base64,{{ output_image }}" alt="Segmented Image">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
